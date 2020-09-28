@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: event    # event, polling
+        period: 5000
+        strategy: refresh # refresh, restart_context, shutdown
+      config:
+        name: {app}      # kustomize로 생성된 configmap의 name이 주입되게 하는 방법??

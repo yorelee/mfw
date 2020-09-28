@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      containers:
+      - name: microservice
+        image: cloudsvcdev/microservice
+        ports:
+        - containerPort: 8080
+        envFrom:
+          - configMapRef:
+              name: system-config
+        volumeMounts:
+          - mountPath: /config
+            name: app-config-volume
+            readOnly: true
+          - mountPath: /pattern
+            name: pattern-config-volume
+            readOnly: true
+      volumes:
+        - name: app-config-volume
+          configMap:
+            name: app-config
+        - name: pattern-config-volume
+          configMap:
+            name: pattern-config

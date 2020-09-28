@@ -1,0 +1,11 @@
+spring:
+    microservice-name: sample-application-property-for-base-msa-framework
+    sleuth:
+        traceId128: true
+    sampler:
+        probability: 1.0
+    zipkin:
+        baseUrl: http://zipkin.zipkin:9411
+logging:
+    pattern:
+        level: "%X{traceId} %X{spanId} %5p"

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: app
+spec:
+  serviceName: "headless"
+  replicas: 3
+  template:
+    spec:
+      containers:
+      - name: microservice
+        image: cloudsvcdev/microservice
+        ports:
+        - containerPort: 80
+        envFrom:
+          - configMapRef:
+              name: system-config
+        volumeMounts:
+          - mountPath: /config
+            name: app-config-volume
+            readOnly: true
+          - mountPath: /pattern
+            name: pattern-config-volume
+            readOnly: true
+  volumeClaimTemplates:
+    - metadata:
+        name: app-config-volume
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Mi
+        storageClassName: ibmc-file-bronze
+        volumeMode: Filesystem
+    - metadata:
+        name: pattern-config-volume
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Mi
+        storageClassName: ibmc-file-bronze
+        volumeMode: Filesystem

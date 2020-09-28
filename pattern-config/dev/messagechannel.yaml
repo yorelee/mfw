@@ -1,0 +1,13 @@
+spring:
+  microservice-name: sample-application-property-for-base-msa-framework
+  rabbitmq:
+    host: 169.56.171.66
+    port: 5672
+    username: user
+    password: eK8aHoKXXQ
+    virtual-host: /
+
+management:
+  health:
+    rabbit:
+      enabled: false

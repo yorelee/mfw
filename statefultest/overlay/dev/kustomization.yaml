@@ -1,0 +1,27 @@
+bases:
+- ../../../deploy-config/default-statefulset
+- ../../../pattern-config/dev
+commonLabels:
+  test: test
+configMapGenerator:
+- literals:
+  - SPRING_CONFIG_LOCATION=classpath:/,classpath:/config/,file:/,file:/pattern/dbaccess.yaml,file:/pattern/messagechannel.yaml,file:/pattern/session.yaml,file:/pattern/cache.yaml,file:/pattern/metric.yaml,file:/pattern/log.yaml,file:/config/,file:/config/application-overlay.yaml
+  name: system-config
+- files:
+  - application-overlay.yaml
+  name: app-config
+images:
+- name: cloudsvcdev/microservice
+  newName: vup-registry.cloudzcp.io/modern/example/statefultest
+  newTag: 0.0.1
+namePrefix: statefultest-
+nameSuffix: -test
+patchesStrategicMerge:
+- replicas-patch.yaml
+- imagepolicy-patch.yaml
+- probe-patch.yaml
+- spec-patch.yaml
+- pod-lifecycle-patch.yaml
+- metric-patch.yaml
+- vct-patch.yaml
+- headless-patch.yaml

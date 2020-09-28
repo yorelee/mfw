@@ -1,0 +1,4 @@
+resources:
+  - destination-rule.yaml
+  - gateway.yaml
+  - virtualservice.yaml

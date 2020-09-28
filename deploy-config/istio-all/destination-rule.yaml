@@ -1,0 +1,41 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: app
+# spec:
+#   host: recommendation
+#   subsets:
+#   - labels:
+#       version: v1
+#     name: version-v1
+#     trafficPolicy:
+#       connectionPool:
+#         http:
+#           http1MaxPendingRequests: 10
+#           maxRequestPerConnection: 10
+#         tcp:
+#           maxConnections: 10
+#       loadBalancer:
+#         simple: RANDOM
+#       outlierDetection:
+#         baseEjectionTime: 15s
+#         consecutiveErrors: 10
+#         interval: 5s
+#         maxEjectionPercent: 100
+#   - labels:
+#       version: v2
+#     name: version-v2
+#     trafficPolicy:
+#       connectionPool:
+#         http:
+#           http1MaxPendingRequests: 10
+#           maxRequestPerConnection: 10
+#         tcp:
+#           maxConnections: 10
+#       loadBalancer:
+#         simple: RANDOM
+#       outlierDetection:
+#         baseEjectionTime: 15s
+#         consecutiveErrors: 10
+#         interval: 5s
+#         maxEjectionPercent: 100

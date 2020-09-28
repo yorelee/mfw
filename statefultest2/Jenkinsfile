@@ -1,0 +1,52 @@
+@Library('retort-lib') _
+def label = "jenkins-${UUID.randomUUID().toString()}"
+
+def ZCP_USERID='mptf'
+def DOCKER_IMAGE='modern/example/statefultest2'
+def K8S_NAMESPACE='yoreworld'
+
+timestamps {
+    podTemplate(label:label,
+        serviceAccount: "zcp-system-sa-${ZCP_USERID}",
+        containers: [
+            containerTemplate(name: 'maven', image: 'maven:3.5.2-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
+            containerTemplate(name: 'docker', image: 'docker:17-dind', ttyEnabled: true, command: 'dockerd-entrypoint.sh', privileged: true),
+            containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.18.2', ttyEnabled: true, command: 'cat')
+        ],
+        volumes: [
+            persistentVolumeClaim(mountPath: '/root/.m2', claimName: 'zcp-jenkins-mvn-repo')
+        ]) {
+    
+        node(label) {
+            stage('SOURCE CHECKOUT') {
+                def repo = checkout scm
+            }
+    
+            stage('BUILD') {
+                container('maven') {
+                    mavenBuild goal: 'clean package -s settings.xml -DskipTests=true -f statefultest2/pom.xml', systemProperties:['maven.repo.local':"/root/.m2/${JOB_NAME}"]
+                }
+            }
+    
+            dir('statefultest2') {
+                stage('BUILD DOCKER IMAGE') {
+                    container('docker') {
+                        def datas = readYaml file: 'overlay/dev/kustomization.yaml'
+                        def DOCKER_IMAGE_VERSION = datas.images[0].newTag
+                        dockerCmd.build tag: "${HARBOR_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_IMAGE_VERSION}"
+                        dockerCmd.push registry: HARBOR_REGISTRY, imageName: DOCKER_IMAGE, imageVersion: DOCKER_IMAGE_VERSION, credentialsId: "HARBOR_CREDENTIALS"
+                    }
+                }
+            }
+    
+            stage('DEPLOY') {
+                container('kubectl') {
+                    /*
+                    kubeCmd.apply file: 'msa-app-01/overlay/dev/deploy.yaml', wait: 300, recoverOnFail: false, namespace: K8S_NAMESPACE
+                    */
+                    sh 'kubectl -n yoreworld apply -k statefultest2/overlay/dev/'
+                }
+            }
+        }
+    }
+}
