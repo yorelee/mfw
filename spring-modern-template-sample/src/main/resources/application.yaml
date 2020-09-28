@@ -3,4 +3,4 @@ management:
     web:
       base-path: "/actuator-local"
       exposure:
-        include : "info,health,prometheus"  # default : info,health
+        include : "info,health,prometheus"  # default : info,health # test commit
