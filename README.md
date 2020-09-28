@@ -1,2 +1,2 @@
-# msa-dev-platform-base test
+# msa-dev-platform-base
 
