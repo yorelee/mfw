@@ -1,4 +1,4 @@
-## Log Pattern ##test09280335
+## Log Pattern
 logging:
     level:
         root: info
