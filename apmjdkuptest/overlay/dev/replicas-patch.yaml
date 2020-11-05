@@ -3,4 +3,4 @@ kind: Deployment
 metadata:
   name: app
 spec:
-  replicas: 44
+  replicas: 14
