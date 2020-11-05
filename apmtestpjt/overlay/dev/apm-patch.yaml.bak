@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      # elastic-apm-agent을 구성하기 위한 emptyDir 볼륨 구성
+      volumes: 
+      - name: elastic-apm-agent 
+        emptyDir: {}
+      # initContainer에 elastic-java-agent을 구성함
+      initContainers: 
+      - name: elastic-java-agent 
+        # image: docker.elastic.co/observability/apm-agent-java:1.18.1 # java agent는 1.x을 사용하며 최신은 1.18.x 임
+        image: vup-registry.cloudzcp.io/modern/example/apm-agent-java-webflux:1.16.1
+        volumeMounts: 
+        - mountPath: /elastic/apm/agent
+          name: elastic-apm-agent 
+        command: ['cp', '-v', '/usr/agent/elastic-apm-agent.jar', '/elastic/apm/agent']   # elastic-apm-agent.jar 파일을 복사 구성
+      containers:
+      - name: microservice
+        volumeMounts:
+        - mountPath: /elastic/apm/agent
+          name: elastic-apm-agent
+        env:
+        - name: ELASTIC_APM_SERVER_URLS                               # 공통 사항
+          value: "http://apmserver-svc.msa-framework:8200"
+        - name: JAVA_TOOL_OPTIONS                                     # 공통 사항
+          value: -javaagent:/elastic/apm/agent/elastic-apm-agent.jar
+        - name: ELASTIC_APM_APPLICATION_PACKAGES                      # 사용자 프로젝트 생성 경로로 값 적용
+          value: "com.skcc"
+        - name: ELASTIC_APM_ENVIRONMENT                               # 배포 Cluster 타입(dev, prod)
+          value: dev
+        - name: ELASTIC_APM_LOG_LEVEL                                 # 사용자 입력 받음 또는 배포 Cluster 타입에 따라 dev->DEBUG, prod->INFO 로 고정
+          value: INFO
+        - name: ELASTIC_APM_SERVICE_NAME                              # 프로젝트명_마이크로서비스명, https://www.elastic.co/guide/en/apm/agent/nodejs/master/configuration.html
+          value: "projectname_awesome-bff"                            # 허용되는 문자 : a-z, A-Z, 0-9, -, _, and space.

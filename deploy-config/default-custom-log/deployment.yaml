@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      serviceAccountName: config-reader
+      containers:
+      - name: microservice
+        image: cloudsvcdev/microservice
+        ports:
+        - containerPort: 8080
+        envFrom:
+          - configMapRef:
+              name: system-config
+        volumeMounts:
+          - mountPath: /config
+            name: app-config-volume
+            readOnly: true
+          - mountPath: /pattern
+            name: pattern-config-volume
+            readOnly: true
+      - name: logging
+        env:
+        - name: NAMESPACE
+          valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+        - name: FLUENTBIT_CONFIG
+          value: fluent-bit.conf
+        image: ilkrpg/fluent-bit:0.13.4_a
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/log
+          name: varlog
+        - mountPath: /var/data
+          name: vardata
+          readOnly: true
+        - mountPath: /fluent-bit/etc/
+          name: fluent-bit-sidecar-config
+      volumes:
+        - name: app-config-volume
+          configMap:
+            name: app-config
+        - name: pattern-config-volume
+          configMap:
+            name: pattern-config
+        - name: varlog 
+          hostPath:
+            path: /var/log
+            type: ""
+        - name: vardata
+          hostPath:
+            path: /var/data
+            type: ""
+        - name: fluent-bit-sidecar-config
+          configMap:
+            name: fluent-bit-sidecar-config
+        

@@ -1,0 +1,13 @@
+resources:
+- deployment.yaml
+- service.yaml
+- role.yaml
+- rb.yaml
+- sa.yaml
+configMapGenerator:
+- name : fluent-bit-sidecar-config
+  files: 
+  - filter-kubernetes.conf
+  - fluent-bit.conf
+  - input-kubernetes.conf
+  - output-fluentd.conf
