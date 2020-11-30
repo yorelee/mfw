@@ -1,6 +1,9 @@
 resources:
-  - statefulset.yaml
-  - headless-service.yaml
+- statefulset.yaml
+- headless-service.yaml
+- role.yaml
+- rb.yaml
+- sa.yaml  
 configMapGenerator:
 - name : fluent-bit-sidecar-config
   files: 
@@ -8,7 +11,3 @@ configMapGenerator:
   - fluent-bit.conf
   - input-kubernetes.conf
   - output-fluentd.conf
-# configMapGenerator:
-#   - name: system-config
-#     literals:
-#       - SPRING_CONFIG_LOCATION=classpath:/,classpath:/config/,file:/,file:/pattern/dbaccess.yaml,file:/pattern/messagechannel.yaml,file:/pattern/session.yaml,file:/pattern/cache.yaml,file:/pattern/metric.yaml,file:/pattern/log.yaml,file:/config/,file:/config/application-overlay.yaml

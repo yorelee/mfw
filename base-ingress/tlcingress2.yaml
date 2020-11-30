@@ -1,0 +1,46 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: TLC_TEST_PROJECT3-tlcingress2
+spec:
+  rules:
+  - host: tlc.com
+    http:
+      paths:
+      - backend:
+          serviceName: statefulsettestpjt-app-dev
+          servicePort: 0
+        path: /a
+      - backend:
+          serviceName: pvctestpjt-app-dev
+          servicePort: 0
+        path: /b
+  - host: tlc.com
+    http:
+      paths:
+      - backend:
+          serviceName: commontest-app-dev
+          servicePort: 0
+        path: /a
+      - backend:
+          serviceName: pvctestpjt-app-dev
+          servicePort: 0
+        path: /b
+  - host: tlc.com
+    http:
+      paths:
+      - backend:
+          serviceName: promodetest-app-dev
+          servicePort: 0
+        path: /c
+  - host: tlc2.com
+    http:
+      paths:
+      - backend:
+          serviceName: apmtestms-app-dev
+          servicePort: 0
+        path: //3
+  tls:
+  - hosts:
+    - tlc2.com
+    secretName: sample

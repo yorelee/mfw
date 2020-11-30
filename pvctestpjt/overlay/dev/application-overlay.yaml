@@ -1,0 +1,6 @@
+spring:
+    application:
+        name: pvctestpjt
+
+server:
+    port: 8080

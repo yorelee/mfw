@@ -1,0 +1,38 @@
+bases:
+- ../../../deploy-config/default-custom-log
+- ../../../pattern-config/dev
+commonLabels:
+  cl: pattern
+  microservice: clpjt
+  profile: dev
+  project: TLC_TEST_PROJECT3
+configMapGenerator:
+- literals:
+  - SPRING_CONFIG_LOCATION=classpath:/,classpath:/config/,file:/,file:/pattern/dbaccess.yaml,file:/pattern/messagechannel.yaml,file:/pattern/session.yaml,file:/pattern/cache.yaml,file:/pattern/metric.yaml,file:/pattern/log.yaml,file:/config/,file:/config/application-overlay.yaml
+  name: system-config
+- files:
+  - application-overlay.yaml
+  name: app-config
+- behavior: merge
+  files:
+  - parsers.conf
+  name: fluent-bit-sidecar-config
+images:
+- name: cloudsvcdev/microservice
+  newName: vup-registry.cloudzcp.io/modern/example/clpjt
+  newTag: 0.0.1
+namePrefix: clpjt-
+nameSuffix: -dev
+patchesJson6902:
+- path: service-patch.yaml
+  target:
+    kind: Service
+    name: app
+    version: v1
+patchesStrategicMerge:
+- replicas-patch.yaml
+- imagepolicy-patch.yaml
+- probe-patch.yaml
+- spec-patch.yaml
+- pod-lifecycle-patch.yaml
+- metric-patch.yaml

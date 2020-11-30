@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: app
+spec:
+  serviceName: headless
+  template:
+    spec:
+      containers:
+      - name: microservice
+        volumeMounts:
+        - mountPath: /config
+          name: app-config-volume
+          readOnly: true
+  volumeClaimTemplates:
+  - metadata:
+      name: app-config-volume
+    spec:
+      accessModes:
+      - ReadWriteMany
+      resources:
+        requests:
+          storage: 222Mi
+      storageClassName: ibmc-file-bronze
+      volumeMode: Filesystem

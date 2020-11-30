@@ -7,6 +7,7 @@ spec:
   replicas: 3
   template:
     spec:
+      serviceAccountName: config-reader
       containers:
       - name: microservice
         image: cloudsvcdev/microservice
@@ -24,16 +25,21 @@ spec:
             readOnly: true
       - name: logging
         env:
-        - name: NODE_NAME
+        - name: NAMESPACE
           valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: spec.nodeName
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace        
+        - name: POD_NAME
+          valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
         - name: FLUENTBIT_CONFIG
           value: fluent-bit.conf
         image: ilkrpg/fluent-bit:0.13.4_a
         ports:
-        - containerPort: 2020
+        - containerPort: 8080
           protocol: TCP
         volumeMounts:
         - mountPath: /var/log

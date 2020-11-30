@@ -1,0 +1,13 @@
+logging:
+  level:
+    com.skcc.modern: info
+    com.skcc.modern.exception: debug
+    com.skcc.modern.service: info
+    com.skcc.modern.web: debug
+    root: info
+  pattern.level: "%X{traceId} %X{spanId} %5p"
+server:
+  port: 8080
+spring:
+  application:
+    name: clpjt

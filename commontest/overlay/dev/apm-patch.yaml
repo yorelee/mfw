@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      volumes: 
+      - name: elastic-apm-agent 
+        emptyDir: {}
+      initContainers: 
+      - name: elastic-java-agent 
+        image: vup-registry.cloudzcp.io/modern/example/apm-agent-java-webflux:1.16.1
+        volumeMounts: 
+        - mountPath: /elastic/apm/agent
+          name: elastic-apm-agent 
+        command: ['cp', '-v', '/usr/agent/elastic-apm-agent.jar', '/elastic/apm/agent']
+      containers:
+      - name: microservice
+        volumeMounts:
+        - mountPath: /elastic/apm/agent
+          name: elastic-apm-agent
+        env:
+        - name: ELASTIC_APM_SERVER_URLS
+          value: "http://apmserver-svc.msa-framework:8200"
+        - name: JAVA_TOOL_OPTIONS
+          value: -javaagent:/elastic/apm/agent/elastic-apm-agent.jar
+        - name: ELASTIC_APM_APPLICATION_PACKAGES
+          value: "com.skcc"
+        - name: ELASTIC_APM_ENVIRONMENT
+          value: dev
+        - name: ELASTIC_APM_LOG_LEVEL
+          value: INFO
+        - name: ELASTIC_APM_SERVICE_NAME
+          value: "projectname_awesome-bff"

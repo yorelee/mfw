@@ -2,28 +2,3 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: app
-# spec:
-#   serviceName: "headless"
-#   replicas: 3
-#   template:
-#     spec:
-#       containers:
-#       - name: microservice
-#         image: cloudsvcdev/microservice
-#         ports:
-#         - containerPort: 80
-#           name: web
-#         volumeMounts:
-#           - name: sample
-#             mountPath: /sample
-#   volumeClaimTemplates:
-#     - metadata:
-#         name: sample
-#       spec:
-#         accessModes:
-#         - ReadWriteOnce
-#         resources:
-#           requests:
-#             storage: 100Mi
-#         storageClassName: ibmc-file-bronze
-#         volumeMode: Filesystem
