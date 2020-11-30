@@ -7,7 +7,7 @@ logging:
     root: info
   pattern.level: "%X{traceId} %X{spanId} %5p"
 server:
-  port: 8080
+  port: 80805
 spring:
   application:
     name: clpjt
