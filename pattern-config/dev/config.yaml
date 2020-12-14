@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: event
+        strategy: refresh
+        period: 5000
+      # config:
+        # dynamic 적용할 configmap 정보에 대한 입력 필요
+        # application-overlay영역으로 제공시에는 kustomize의 namePrefix+nameSuffix 구조로 아래 name 설정
+        # name: springboot-config-hot-patternapp-config-v0-dev
