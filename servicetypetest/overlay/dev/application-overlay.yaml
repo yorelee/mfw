@@ -3,4 +3,4 @@ spring:
         name: servicetypetest
 
 server:
-    port: 8080
+    port: 80803333
