@@ -1,6 +1,7 @@
 bases:
 - ../../../deploy-config/default
 - ../../../pattern-config/dev
+- ../../../deploy-config/hpa
 commonLabels:
   microservice: servicetypetest
   profile: dev
@@ -32,3 +33,4 @@ patchesStrategicMerge:
 - spec-patch.yaml
 - pod-lifecycle-patch.yaml
 - metric-patch.yaml
+- hpa-patch.yaml
