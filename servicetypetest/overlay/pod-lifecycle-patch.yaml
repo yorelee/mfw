@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      containers:
+      - lifecycle:
+          postStart:
+            httpGet:
+              path: /actuator/health
+              port: 1000
+          preStop:
+            httpGet:
+              path: /actuator/health
+              port: 1001
+        name: microservice

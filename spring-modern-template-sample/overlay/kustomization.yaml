@@ -1,0 +1,32 @@
+bases:
+  - ../../../deploy-config/default
+  - ../../../pattern-config/dev
+namePrefix: <%=name%>-
+nameSuffix: -<%=name_suffix%>
+commonLabels:
+  biz: project-refactor-example
+  app: project-refactor-example
+images:
+  - name: cloudsvcdev/microservice
+    newName: vup-registry.cloudzcp.io/modern/example/<%=name%>
+    newTag: 0.0.1
+configMapGenerator:
+  - name: system-config
+    literals:
+      - SPRING_CONFIG_LOCATION=classpath:/,classpath:/config/,file:/,file:/pattern/dbaccess.yaml,file:/pattern/messagechannel.yaml,file:/pattern/session.yaml,file:/pattern/cache.yaml,file:/pattern/metric.yaml,file:/pattern/log.yaml,file:/config/,file:/config/application-overlay.yaml
+  - name: app-config
+    files:
+      - application-overlay.yaml
+patchesStrategicMerge:
+  - replicas-patch.yaml
+  - imagepolicy-patch.yaml
+  - probe-patch.yaml
+  - spec-patch.yaml
+  - pod-lifecycle-patch.yaml
+patchesJson6902:
+  - target:
+      version: v1
+      kind: Service
+      name: app
+    path: service-patch.yaml
+
