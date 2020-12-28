@@ -6,7 +6,7 @@
   value: None
 - op: replace
   path: /spec/ports/0/port
-  value: 8082
+  value: 803
 - op: replace
   path: /spec/ports/0/targetPort
-  value: 8082
+  value: 803

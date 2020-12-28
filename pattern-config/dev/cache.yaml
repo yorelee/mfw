@@ -1,15 +1,35 @@
 spring:
+  cache:
+    type: redis
   microservice-name: sample-application-property-for-base-msa-framework
   redis:
-    port: 6379
     host: 169.56.171.68
-    password: OIpjz8SOJS
     lettuce:
       pool:
         max-active: 10
         max-idle: 10
-        min-idle: 2
         max-wait: 30
+        min-idle: 2
+    password: OIpjz8SOJS
+    port: 6379
 
+---
+spring:
   cache:
+    redis:
+      default-expire-time: 3600
+      key-prefix: myCache
+      time-to-live: 3600
+      use-key-prefix: true
     type: redis
+  microservice-name: servicetypetest
+  redis:
+    host: tlc.redis.com
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        max-wait: 30
+        min-idle: 2
+    password: qwe123
+    port: 30006

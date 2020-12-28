@@ -18,3 +18,24 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
+
+---
+spring:
+  datasource:
+    dbcp2:
+      initial-size: 20
+    driver-class-name: org.mariadb.jdbc.Driver
+    password: test
+    platform: mariadb
+    url: jdbc:127.0.0.1:3306
+    username: tlc
+  h2:
+    console:
+      enabled: false
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  microservice-name: servicetypetest

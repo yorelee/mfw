@@ -1,5 +1,4 @@
 spring:
-  microservice-name: sample-application-property-for-base-msa-framework
   cloud:
     kubernetes:
       reload:

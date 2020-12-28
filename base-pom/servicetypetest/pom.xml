@@ -28,6 +28,27 @@
     <dependencies>
         <dependency>
             <groupId>com.skcc.modern.pattern</groupId>
+            <artifactId>mariadb-access-pattern</artifactId>
+            <version>0.0.5</version>
+            <type>jar</type>
+            <scope>complie</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.skcc.modern.pattern</groupId>
+            <artifactId>redis-cache</artifactId>
+            <version>0.0.5</version>
+            <type>jar</type>
+            <scope>complie</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.skcc.modern.pattern</groupId>
+            <artifactId>metric</artifactId>
+            <version>0.0.5</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.skcc.modern.pattern</groupId>
             <artifactId>health</artifactId>
             <version>0.0.5</version>
             <type>jar</type>
