@@ -1,0 +1,15 @@
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      automaticTransitionFromOpenToHalfOpenEnabled: 'false'
+      failureRateThreshold: 50
+      minimumNumberOfCalls: 100333
+      permittedNumberOfCallsInHalfOpenState: 10333
+      slidingWindowSize: 100333
+      slidingWindowType: TIME_BASED
+      waitDurationInOpenState: 60000
+server:
+  port: 8080
+spring:
+  application:
+    name: metricservice

@@ -12,3 +12,17 @@ management:
         resilience4j.circuitbreaker.calls: true
 
 resilience4j.circuitbreaker.metrics.use_legacy_binder: true
+---
+management:
+  health:
+    circuitbreakers.enabled: true
+    diskspace.enabled: false
+    ratelimiters.enabled: false
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        resilience4j.circuitbreaker.calls: true
+      sla.http.server.requests: 100ms,200ms,400ms
+    tags.application: ${spring.application.name}
+resilience4j.circuitbreaker.metrics.use_legacy_binder: true

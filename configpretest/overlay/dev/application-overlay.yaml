@@ -1,0 +1,6 @@
+spring:
+    application:
+        name: configpretest
+
+server:
+    port: 8080

@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: app
+spec:
+  serviceName: "headless"
+  template:
+    spec:
+      containers:
+      - name: microservice
+        volumeMounts:
+          - mountPath: /config
+            name: app-config-volume
+            readOnly: true      

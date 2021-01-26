@@ -1,9 +1,41 @@
 spring:
-  microservice-name: sample-application-property-for-base-msa-framework
   cloud:
     kubernetes:
       reload:
         enabled: true
         mode: event
-        strategy: refresh
         period: 5000
+        strategy: refresh
+
+---
+spring:
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 3213
+        strategy: refresh
+  microservice-name: metricservice
+
+---
+spring:
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: event
+        period: 5000
+        strategy: refresh
+  microservice-name: confighottest
+
+---
+spring:
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 3123
+        strategy: refresh
+  microservice-name: configpretest

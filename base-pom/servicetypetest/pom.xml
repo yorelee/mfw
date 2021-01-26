@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>com.skcc.modern.pattern</groupId>
-            <artifactId>metric</artifactId>
+            <artifactId>redis-session-webflux</artifactId>
             <version>0.0.5</version>
             <type>jar</type>
             <scope>compile</scope>

@@ -1,0 +1,34 @@
+bases:
+- ../../../deploy-config/default
+- ../../../pattern-config/dev
+commonLabels:
+  microservice: confighottest
+  profile: dev
+  project: TLC_TEST_PROJECT3
+  test: config
+configMapGenerator:
+- literals:
+  - SPRING_CONFIG_LOCATION=classpath:/,classpath:/config/,file:/,file:/pattern/dbaccess.yaml,file:/pattern/messagechannel.yaml,file:/pattern/session.yaml,file:/pattern/cache.yaml,file:/pattern/metric.yaml,file:/pattern/log.yaml,file:/config/,file:/config/application-overlay.yaml
+  name: system-config
+- files:
+  - application-overlay.yaml
+  name: app-config
+images:
+- name: cloudsvcdev/microservice
+  newName: vup-registry.cloudzcp.io/modern/example/confighottest
+  newTag: 0.0.1
+namePrefix: confighottest-
+nameSuffix: -dev
+patchesJson6902:
+- path: service-patch.yaml
+  target:
+    kind: Service
+    name: app
+    version: v1
+patchesStrategicMerge:
+- replicas-patch.yaml
+- imagepolicy-patch.yaml
+- probe-patch.yaml
+- spec-patch.yaml
+- pod-lifecycle-patch.yaml
+- metric-patch.yaml

@@ -16,3 +16,60 @@ spring:
     redis:
       flush-mode: on_save
       save-mode: always
+
+---
+spring:
+  microservice-name: servicetypetest
+  redis:
+    host: 169.56.171.68
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        max-wait: 30
+        min-idle: 2
+    password: OIpjz8SOJS
+    port: 6379
+  session:
+    redis:
+      flush-mode: on_save
+      save-mode: always
+    store-type: redis
+
+---
+spring:
+  microservice-name: webfluxtest
+  redis:
+    host: tlc.redis.com
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        max-wait: 30
+        min-idle: 2
+    password: qwe123
+    port: 30006
+  session:
+    redis:
+      flush-mode: on_save
+      save-mode: always
+    store-type: redis
+
+---
+spring:
+  microservice-name: configpretest
+  redis:
+    host: tlc.redis.com
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        max-wait: 30
+        min-idle: 2
+    password: qwe123
+    port: 30006
+  session:
+    redis:
+      flush-mode: on_save
+      save-mode: always
+    store-type: redis

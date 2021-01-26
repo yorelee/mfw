@@ -12,7 +12,7 @@ spec:
         image: cloudsvcdev/microservice
         name: microservice
         ports:
-        - containerPort: 8080
+        - containerPort: 3333
         volumeMounts:
         - mountPath: /config
           name: app-config-volume
