@@ -6,13 +6,3 @@ management:
         include: info,health,prometheus
   server:
     port: 8091
-
----
-management:
-  endpoints:
-    web:
-      base-path: /actuator
-      exposure:
-        include: info,health,prometheus
-  server:
-    port: 8091
